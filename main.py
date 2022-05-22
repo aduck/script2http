@@ -37,13 +37,15 @@ def exec_script(script, args, ipt, timeout):
         if time.time() - last_time > timeout:
             sp.kill()
             break
+        # readline会阻塞，会导致timeout失效，就这样吧
         line = sp.stdout.readline()
         if line:
             yield line
             yield '<br>'
         elif sp.poll() is not None:
             break
-        time.sleep(0.1)
+        else:
+            time.sleep(0.1)
 
 
 @app.route("/<path:script_path>")
