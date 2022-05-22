@@ -41,7 +41,7 @@ def exec_script(script, args, ipt, timeout):
         if line:
             yield line
             yield '<br>'
-        else:
+        elif sp.poll() is not None:
             break
         time.sleep(0.1)
 
